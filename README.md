@@ -12,7 +12,7 @@ A modern, responsive website for Flomo Merchandise, showcasing their range of fo
 - **Framer Motion** - Animation library
 - **React Router** - Client-side routing
 
-## Getting Starte
+## Getting Starte ##
 
 ### Prerequisites
 
