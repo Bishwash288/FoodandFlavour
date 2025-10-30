@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { Mail } from "lucide-react";
 import flavoursCategory from "@/assets/flavours-category.jpg";
 import coloursCategory from "@/assets/colours-category.jpg";
 import bakeryCategory from "@/assets/bakery-category.jpg";
@@ -147,10 +148,11 @@ const Products = () => {
         {/* Header with Carousel */}
         <div className="text-center mb-16 space-y-8">
           <div className="space-y-4">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-              Our Flavourful Range
-            </h1>
-            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+  Our Flavourful Range
+</h1>
+
+            <div className="w-40 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Explore our comprehensive selection of food flavours, colours, and bakery ingredients 
               designed to elevate your culinary creations
@@ -185,6 +187,7 @@ const Products = () => {
                   <button
                     key={index}
                     onClick={() => setCurrentImageIndex(index)}
+                    aria-label={`Go to slide ${index + 1}`}
                     className={`w-3 h-3 rounded-full transition-all duration-300 ${
                       index === currentImageIndex
                         ? "bg-primary w-8"
@@ -272,6 +275,35 @@ const Products = () => {
           </Link>
         </div>
       </div>
+    {/* Floating Contact Button (bottom-right) */}
+      
+    <Link to="/contact" aria-label="Contact us" className="fixed right-6 bottom-8 z-50">
+      <div className="relative w-[62px] h-[62px]">
+        <span className="absolute -inset-2 rounded-full bg-emerald-300/40 blur-xl animate-pulse" />
+        <motion.div className="relative flex items-center justify-center w-full h-full rounded-full bg-emerald-400 text-white shadow-lg ring-4 ring-emerald-200/40 hover:scale-105 transform-gpu transition-transform duration-200"
+          animate={{ y: [0, -6, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <motion.span className="flex items-center justify-center"
+            animate={{ rotate: [0, 10, -10, 0], scale: [1, 1.05, 1.05, 1] }}
+            transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <Mail className="w-6 h-6" />
+          </motion.span>
+        </motion.div>
+        <motion.div 
+  className="fixed right-6 bottom-28 z-60 pointer-events-none"
+  initial={{ opacity: 0, y: 6 }}
+  animate={{ opacity: [0, 1, 1, 0.95], y: [6, 0, 0, 6] }}
+  transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut", delay: 0.1 }}
+>
+  <div className="inline-flex items-center bg-emerald-600 text-white text-sm px-3 py-1.5 rounded-full shadow-md">
+    Click to Contact
+  </div>
+</motion.div>
+
+      </div>
+    </Link>
     </div>
   );
 };

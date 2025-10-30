@@ -1,39 +1,45 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
-import logo from "@/assets/logo.png";
+import { useState, useEffect } from "react";
+import logo from "@/assets/LOGO.png";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location]);
 
   const isActive = (path: string) => location.pathname === path;
 
   const navLinks = [
     { path: "/", label: "Home" },
     { path: "/products", label: "Products" },
-    { path: "/contact", label: "Contact" },
+    
   ];
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80">
-        <nav className="container mx-auto px-4 h-20 flex items-center justify-between">
+      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 shadow-lg">
+        <nav className="container mx-auto px-4 h-14 flex items-center">
           <Link to="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-            <img src={logo} alt="Flomo Merchandise" className="h-16 w-auto" />
+            <img src={logo} alt="Flomo Merchandise" className="h-10 w-auto" />
             <span className="font-bold text-xl bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent hidden sm:inline-block">
               Flomo Merchandise
             </span>
           </Link>
+
+          <div className="flex-1" />
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
             {navLinks.map((link) => (
               <Link key={link.path} to={link.path}>
                 <Button
-                  variant={isActive(link.path) ? "default" : "ghost"}
-                  className="transition-all duration-300"
+                  variant="ghost"
+                  className={`transition-all duration-300 rounded-lg ${isActive(link.path) ? 'text-green-500 bg-transparent' : 'hover:text-green-500 hover:bg-transparent'}`}
                 >
                   {link.label}
                 </Button>
@@ -89,7 +95,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 Bringing colour, flavour, and delight to every creation since our inception.
               </p>
             </div>
-            <div>
+            <div className="ml-8">
               <h4 className="font-semibold mb-3">Quick Links</h4>
               <ul className="space-y-2">
                 {navLinks.map((link) => (
@@ -107,13 +113,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <div>
               <h4 className="font-semibold mb-3">Contact</h4>
               <div className="space-y-2 text-sm text-muted-foreground">
-                <p>Raqnal Consultancy, Liberia</p>
-                <p>info@flomomerchandise.com</p>
+                <p></p>
+                <p>patrickzflomo@gmail.com</p>
               </div>
             </div>
           </div>
           <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
-            <p>© 2025 Flomo Merchandise. Crafted with quality and care.</p>
+            <p>Managed By Raqnal Consultancy Inc (Liberia)</p>
           </div>
         </div>
       </footer>

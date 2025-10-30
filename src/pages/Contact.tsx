@@ -33,11 +33,13 @@ const Contact = () => {
     try {
       const validatedData = contactSchema.parse(formData);
       
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting us. We'll get back to you soon.",
-      });
-      
+     toast({
+  title: "Message Sent!",
+  description: "Thank you for contacting us. We'll get back to you soon.",
+  duration: 1500, // 2 seconds
+  className: "bg-green-100 text-green-800 border border-green-300", // light green style
+});
+
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
     } catch (error) {
@@ -51,9 +53,11 @@ const Contact = () => {
         setErrors(newErrors);
         
         toast({
-          title: "Validation Error",
-          description: "Please check the form for errors.",
+        
+          description: "Hey there! Looks like you missed something.",
           variant: "destructive",
+          duration: 1500, // 2 seconds
+
         });
       }
     }
@@ -125,9 +129,10 @@ const Contact = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16 space-y-4"
         >
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-            Let's Create Together
-          </h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground">
+  Contact Us
+</h1>
+
           <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Have questions about our products? Want to place an order? We're here to help!
@@ -157,8 +162,7 @@ const Contact = () => {
                   <div>
                     <h3 className="font-semibold mb-1 text-foreground">Address</h3>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      Raqnal Consultancy<br />
-                      Liberia
+                      New Life Community Bernard Farm Paynesville Montserrado Liberia 100010
                     </p>
                   </div>
                 </div>
@@ -173,7 +177,7 @@ const Contact = () => {
                       href="mailto:info@flomomerchandise.com"
                       className="text-sm text-muted-foreground hover:text-primary transition-colors"
                     >
-                      info@flomomerchandise.com
+                      patrickzflomo@gmail.com
                     </a>
                   </div>
                 </div>
