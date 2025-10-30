@@ -1,11 +1,25 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 import flavoursCategory from "@/assets/flavours-category.jpg";
 import coloursCategory from "@/assets/colours-category.jpg";
 import bakeryCategory from "@/assets/bakery-category.jpg";
+import heroBanner from "@/assets/hero-banner.jpg";
 
 const Products = () => {
+  // Auto-scrolling carousel
+  const carouselImages = [heroBanner, flavoursCategory, coloursCategory, bakeryCategory];
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % carouselImages.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, []);
+
   const productCategories = [
     {
       id: "flavours",
@@ -130,16 +144,57 @@ const Products = () => {
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-background via-muted/20 to-background">
       <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-16 space-y-4">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
-            Our Flavourful Range
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Explore our comprehensive selection of food flavours, colours, and bakery ingredients 
-            designed to elevate your culinary creations
-          </p>
+        {/* Header with Carousel */}
+        <div className="text-center mb-16 space-y-8">
+          <div className="space-y-4">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+              Our Flavourful Range
+            </h1>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              Explore our comprehensive selection of food flavours, colours, and bakery ingredients 
+              designed to elevate your culinary creations
+            </p>
+          </div>
+
+          {/* Auto-Scrolling Carousel */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="relative rounded-3xl overflow-hidden shadow-float h-[400px]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentImageIndex}
+                  src={carouselImages[currentImageIndex]}
+                  alt={`Product showcase ${currentImageIndex + 1}`}
+                  className="w-full h-full object-cover"
+                  initial={{ opacity: 0, scale: 1.1 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.7 }}
+                />
+              </AnimatePresence>
+              <div className="absolute inset-0 bg-gradient-to-t from-primary/30 to-transparent" />
+              
+              {/* Carousel Indicators */}
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+                {carouselImages.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentImageIndex(index)}
+                    className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                      index === currentImageIndex
+                        ? "bg-primary w-8"
+                        : "bg-white/50 hover:bg-white/70"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         {/* Product Categories */}
