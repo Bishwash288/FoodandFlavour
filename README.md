@@ -19,7 +19,7 @@ A modern, responsive website for Flomo Merchandise, showcasing their range of fo
 - Node.js (version 18 or higher)
 - npm or yarn
 
-### Installation
+### Installation ##
 
 1. Clone the repository:
 ```bash
