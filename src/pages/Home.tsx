@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Award, Users } from "lucide-react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 import heroBanner from "@/assets/hero-banner.jpg";
 import flavoursCategory from "@/assets/flavours-category.jpg";
 import coloursCategory from "@/assets/colours-category.jpg";
@@ -9,48 +10,82 @@ import bakeryCategory from "@/assets/bakery-category.jpg";
 import CookieConsent from "@/components/CookieConsent";
 
 const Home = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const leftImageX = useTransform(scrollYProgress, [0, 1], ["-100%", "0%"]);
+  const rightImageX = useTransform(scrollYProgress, [0, 1], ["100%", "0%"]);
+  const centerScale = useTransform(scrollYProgress, [0, 0.5], [0.8, 1]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0]);
 
   return (
     <div className="flex flex-col bg-background">
-      {/* Hero Section */}
-      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background">
-        <div className="absolute inset-0 bg-muted/30" />
+      {/* Hero Section with Animated Background */}
+      <section 
+        ref={heroRef}
+        className="relative min-h-[100vh] flex items-center justify-center overflow-hidden bg-background"
+      >
+        {/* Animated Background Images */}
+        <motion.div 
+          style={{ x: leftImageX }}
+          className="absolute left-0 top-0 w-1/3 h-full opacity-20 z-0"
+        >
+          <img 
+            src={flavoursCategory} 
+            alt="Flavours decoration" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+        
+        <motion.div 
+          style={{ x: rightImageX }}
+          className="absolute right-0 top-0 w-1/3 h-full opacity-20 z-0"
+        >
+          <img 
+            src={coloursCategory} 
+            alt="Colours decoration" 
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
+
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/80 to-background z-[1]" />
         
         <div className="relative z-10 container mx-auto px-4 py-32">
           <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            style={{ opacity: textOpacity }}
             className="max-w-4xl mx-auto text-center space-y-8"
           >
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight tracking-tight">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight tracking-tight"
+            >
               Taste Innovation
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto"
+            >
               Bringing Colour, Flavour, and Delight to Every Creation
-            </p>
-            <div className="pt-6">
-              <Link to="/products">
-                <Button
-                  size="lg"
-                  className="text-lg px-10 py-7 shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105 hover:-translate-y-1"
-                >
-                  Explore Our Products
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-            </div>
+            </motion.p>
           </motion.div>
           
-          {/* Floating Hero Image */}
+          {/* Center Hero Image with Scale Animation */}
           <motion.div
+            style={{ scale: centerScale }}
             initial={{ opacity: 0, y: 60 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
+            transition={{ duration: 1, delay: 0.4 }}
             className="mt-20"
           >
             <div className="max-w-5xl mx-auto">
-              <div className="relative rounded-3xl overflow-hidden shadow-float transform hover:scale-[1.02] transition-all duration-500">
+              <div className="relative rounded-3xl overflow-hidden shadow-float">
                 <img 
                   src={heroBanner} 
                   alt="Food ingredients and flavours showcase" 
@@ -63,7 +98,7 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Product Categories Section - Floating Image Cards */}
+      {/* Product Categories Section - Modern Animated Cards */}
       <section className="py-32 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4">
           <motion.div 
@@ -80,74 +115,96 @@ const Home = () => {
           </motion.div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img 
-                    src={flavoursCategory} 
-                    alt="Premium food flavours collection" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+            {[
+              {
+                image: flavoursCategory,
+                title: "Flavours",
+                description: "Premium food flavoring solutions",
+                delay: 0
+              },
+              {
+                image: coloursCategory,
+                title: "Colours",
+                description: "Vibrant and safe food coloring",
+                delay: 0.2
+              },
+              {
+                image: bakeryCategory,
+                title: "Bakery",
+                description: "Essential bakery ingredients",
+                delay: 0.4
+              }
+            ].map((product, index) => (
+              <motion.div
+                key={product.title}
+                initial={{ opacity: 0, scale: 0.8, rotateY: -15 }}
+                whileInView={{ opacity: 1, scale: 1, rotateY: 0 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: product.delay,
+                  type: "spring",
+                  stiffness: 100
+                }}
+                viewport={{ once: true }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  rotateY: 5,
+                  z: 50,
+                  transition: { duration: 0.3 }
+                }}
+                className="group perspective-1000"
+                style={{ transformStyle: "preserve-3d" }}
+              >
+                <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 bg-card">
+                  <div className="aspect-[4/5] overflow-hidden">
+                    <motion.img 
+                      src={product.image} 
+                      alt={`${product.title} category`}
+                      className="w-full h-full object-cover"
+                      whileHover={{ scale: 1.15 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </div>
+                  <motion.div 
+                    className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-transparent"
+                    initial={{ opacity: 0.6 }}
+                    whileHover={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                  />
+                  <motion.div 
+                    className="absolute bottom-0 left-0 right-0 p-6 text-white"
+                    initial={{ y: 20 }}
+                    whileHover={{ y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <motion.h3 
+                      className="text-2xl font-bold mb-2"
+                      initial={{ opacity: 0.8 }}
+                      whileHover={{ opacity: 1, scale: 1.05 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {product.title}
+                    </motion.h3>
+                    <motion.p 
+                      className="text-white/90 text-sm"
+                      initial={{ opacity: 0, y: 10 }}
+                      whileHover={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3, delay: 0.1 }}
+                    >
+                      {product.description}
+                    </motion.p>
+                  </motion.div>
+                  
+                  {/* Animated border effect */}
+                  <motion.div
+                    className="absolute inset-0 border-2 border-primary rounded-2xl"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileHover={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Flavours</h3>
-                  <p className="text-white/90 text-sm">Premium food flavoring solutions</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img 
-                    src={coloursCategory} 
-                    alt="Vibrant food colors range" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Colours</h3>
-                  <p className="text-white/90 text-sm">Vibrant and safe food coloring</p>
-                </div>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
-                <div className="aspect-[4/5] overflow-hidden">
-                  <img 
-                    src={bakeryCategory} 
-                    alt="Professional bakery ingredients" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold mb-2">Bakery</h3>
-                  <p className="text-white/90 text-sm">Essential bakery ingredients</p>
-                </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
