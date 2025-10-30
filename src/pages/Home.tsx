@@ -2,59 +2,38 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles, Award, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useEffect } from "react";
 import heroBanner from "@/assets/hero-banner.jpg";
 import flavoursCategory from "@/assets/flavours-category.jpg";
 import coloursCategory from "@/assets/colours-category.jpg";
 import bakeryCategory from "@/assets/bakery-category.jpg";
+import CookieConsent from "@/components/CookieConsent";
 
 const Home = () => {
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const images = document.querySelectorAll('.floating-image');
-      
-      images.forEach((img, index) => {
-        const speed = index % 2 === 0 ? 0.5 : 0.3;
-        const yPos = scrollY * speed;
-        (img as HTMLElement).style.transform = `translateY(${yPos}px)`;
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col bg-background">
       {/* Hero Section */}
-      <section className="relative min-h-[600px] flex items-center justify-center overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url(${heroBanner})` }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/85 to-primary-light/80" />
-        </div>
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background">
+        <div className="absolute inset-0 bg-muted/30" />
         
-        <div className="relative z-10 container mx-auto px-4 py-20 text-center">
+        <div className="relative z-10 container mx-auto px-4 py-32">
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto space-y-6"
+            className="max-w-4xl mx-auto text-center space-y-8"
           >
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-primary-foreground leading-tight">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-foreground leading-tight tracking-tight">
               Taste Innovation
             </h1>
-            <p className="text-xl md:text-2xl text-primary-foreground/95 leading-relaxed max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto">
               Bringing Colour, Flavour, and Delight to Every Creation
             </p>
-            <div className="pt-4">
+            <div className="pt-6">
               <Link to="/products">
                 <Button
                   size="lg"
-                  variant="secondary"
-                  className="text-lg px-8 py-6 shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
+                  className="text-lg px-10 py-7 shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105 hover:-translate-y-1"
                 >
                   Explore Our Products
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -62,42 +41,119 @@ const Home = () => {
               </Link>
             </div>
           </motion.div>
+          
+          {/* Floating Hero Image */}
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+            className="mt-20"
+          >
+            <div className="max-w-5xl mx-auto">
+              <div className="relative rounded-3xl overflow-hidden shadow-float transform hover:scale-[1.02] transition-all duration-500">
+                <img 
+                  src={heroBanner} 
+                  alt="Food ingredients and flavours showcase" 
+                  className="w-full h-auto object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent" />
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* About Section with Floating Images */}
-      <section className="py-20 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
-        {/* Floating Images - Left Side */}
-        <motion.img 
-          src={flavoursCategory}
-          alt="Flavours"
-          className="floating-image absolute left-[-100px] top-20 w-64 h-64 object-cover rounded-full opacity-10 blur-sm pointer-events-none"
-          initial={{ x: -200, opacity: 0 }}
-          whileInView={{ x: -100, opacity: 0.1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-        />
-        <motion.img 
-          src={bakeryCategory}
-          alt="Bakery"
-          className="floating-image absolute left-[-80px] bottom-20 w-48 h-48 object-cover rounded-full opacity-10 blur-sm pointer-events-none"
-          initial={{ x: -200, opacity: 0 }}
-          whileInView={{ x: -80, opacity: 0.1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          viewport={{ once: true }}
-        />
-        
-        {/* Floating Images - Right Side */}
-        <motion.img 
-          src={coloursCategory}
-          alt="Colours"
-          className="floating-image absolute right-[-100px] top-40 w-56 h-56 object-cover rounded-full opacity-10 blur-sm pointer-events-none"
-          initial={{ x: 200, opacity: 0 }}
-          whileInView={{ x: -100, opacity: 0.1 }}
-          transition={{ duration: 1, delay: 0.2 }}
-          viewport={{ once: true }}
-        />
-        
+      {/* Product Categories Section - Floating Image Cards */}
+      <section className="py-32 bg-background relative overflow-hidden">
+        <div className="container mx-auto px-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="text-center mb-16 space-y-4"
+          >
+            <h2 className="text-4xl md:text-6xl font-bold text-foreground">
+              Our Product Range
+            </h2>
+            <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
+          </motion.div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
+                <div className="aspect-[4/5] overflow-hidden">
+                  <img 
+                    src={flavoursCategory} 
+                    alt="Premium food flavours collection" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Flavours</h3>
+                  <p className="text-white/90 text-sm">Premium food flavoring solutions</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.15 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
+                <div className="aspect-[4/5] overflow-hidden">
+                  <img 
+                    src={coloursCategory} 
+                    alt="Vibrant food colors range" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Colours</h3>
+                  <p className="text-white/90 text-sm">Vibrant and safe food coloring</p>
+                </div>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.3 }}
+              viewport={{ once: true }}
+              className="group"
+            >
+              <div className="relative rounded-2xl overflow-hidden shadow-float hover:shadow-strong transition-all duration-500 transform hover:-translate-y-3 hover:rotate-1 bg-card">
+                <div className="aspect-[4/5] overflow-hidden">
+                  <img 
+                    src={bakeryCategory} 
+                    alt="Professional bakery ingredients" 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/20 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <h3 className="text-2xl font-bold mb-2">Bakery</h3>
+                  <p className="text-white/90 text-sm">Essential bakery ingredients</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Section */}
+      <section className="py-32 bg-muted/50 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto">
             <motion.div 
@@ -107,7 +163,7 @@ const Home = () => {
               viewport={{ once: true }}
               className="text-center mb-12 space-y-4"
             >
-              <h2 className="text-3xl md:text-5xl font-bold bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent">
+              <h2 className="text-4xl md:text-6xl font-bold text-foreground">
                 About Flomo Merchandise
               </h2>
               <div className="w-24 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
@@ -118,9 +174,9 @@ const Home = () => {
               whileInView={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: 0.2 }}
               viewport={{ once: true }}
-              className="prose prose-lg max-w-none text-center"
+              className="space-y-6 text-center"
             >
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              <p className="text-lg text-muted-foreground leading-relaxed">
                 Flomo Merchandise specializes in quality food flavours, colours, and bakery 
                 ingredients that redefine taste and creativity. We take pride in providing 
                 superior products that help bakers, chefs, and food manufacturers create 
@@ -137,31 +193,20 @@ const Home = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30 relative overflow-hidden">
-        {/* Floating decoration */}
-        <motion.img 
-          src={coloursCategory}
-          alt="Colours decoration"
-          className="floating-image absolute right-[-120px] top-10 w-72 h-72 object-cover rounded-full opacity-10 blur-sm pointer-events-none"
-          initial={{ x: 200, opacity: 0 }}
-          whileInView={{ x: -120, opacity: 0.1 }}
-          transition={{ duration: 1 }}
-          viewport={{ once: true }}
-        />
-        
+      <section className="py-32 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
               viewport={{ once: true }}
-              className="bg-card p-8 rounded-lg shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-border"
+              className="bg-card p-10 rounded-2xl shadow-float hover:shadow-strong transition-all duration-300 hover:-translate-y-2 border-2 border-border group"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-6">
-                <Sparkles className="h-7 w-7 text-primary-foreground" />
+              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Sparkles className="h-8 w-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">Premium Quality</h3>
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Premium Quality</h3>
               <p className="text-muted-foreground leading-relaxed">
                 We source and supply only the finest food flavours, colours, and bakery 
                 ingredients that meet international quality standards.
@@ -173,12 +218,12 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.1 }}
               viewport={{ once: true }}
-              className="bg-card p-8 rounded-lg shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-border"
+              className="bg-card p-10 rounded-2xl shadow-float hover:shadow-strong transition-all duration-300 hover:-translate-y-2 border-2 border-border group"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-6">
-                <Award className="h-7 w-7 text-primary-foreground" />
+              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Award className="h-8 w-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">Trusted Brand</h3>
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Trusted Brand</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Built on a foundation of trust and reliability, we've become a preferred 
                 partner for food businesses across the region.
@@ -190,12 +235,12 @@ const Home = () => {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
               viewport={{ once: true }}
-              className="bg-card p-8 rounded-lg shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1 border border-border"
+              className="bg-card p-10 rounded-2xl shadow-float hover:shadow-strong transition-all duration-300 hover:-translate-y-2 border-2 border-border group"
             >
-              <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-primary-light flex items-center justify-center mb-6">
-                <Users className="h-7 w-7 text-primary-foreground" />
+              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <Users className="h-8 w-8 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-bold mb-3 text-foreground">Customer Focus</h3>
+              <h3 className="text-2xl font-bold mb-4 text-foreground">Customer Focus</h3>
               <p className="text-muted-foreground leading-relaxed">
                 Your success is our priority. We provide personalized support to help 
                 you achieve the perfect results every time.
@@ -206,33 +251,46 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-primary to-primary-light">
+      <section className="py-32 bg-muted/50">
         <div className="container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
+            className="max-w-3xl mx-auto space-y-8"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
+            <h2 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
               Ready to Transform Your Creations?
             </h2>
-            <p className="text-xl text-primary-foreground/95 mb-8 max-w-2xl mx-auto">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
               Discover our complete range of food flavours, colours, and bakery ingredients
             </p>
-            <Link to="/contact">
-              <Button
-                size="lg"
-                variant="secondary"
-                className="text-lg px-8 py-6 shadow-strong hover:shadow-medium transition-all duration-300 hover:scale-105"
-              >
-                Get In Touch
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+              <Link to="/contact">
+                <Button
+                  size="lg"
+                  className="text-lg px-10 py-7 shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                >
+                  Get In Touch
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to="/products">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-lg px-10 py-7 border-2 hover:bg-card transition-all duration-300 hover:scale-105 hover:-translate-y-1"
+                >
+                  View Products
+                </Button>
+              </Link>
+            </div>
           </motion.div>
         </div>
       </section>
+      
+      <CookieConsent />
     </div>
   );
 };
