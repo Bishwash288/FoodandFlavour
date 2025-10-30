@@ -10,6 +10,7 @@ import bakeryCategory from "@/assets/bakery-category.jpg";
 import CEO from "@/assets/CEO.png";
 import ctaBackground from "@/assets/cupcake.jpg";
 import CookieConsent from "@/components/CookieConsent";
+import { ArrowRight } from "lucide-react"
 
 const Home = () => {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -83,7 +84,7 @@ const Home = () => {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-xl md:text-2xl text-muted-foreground leading-relaxed max-w-2xl mx-auto"
+              className="text-xl md:text-2xl text-foreground leading-relaxed max-w-2xl mx-auto"
             >
               Bringing Colour, Flavour, and Delight to Every Creation
             </motion.p>
@@ -281,14 +282,14 @@ const Home = () => {
                       <div className="space-y-2">
                         <h3 className="text-2xl font-bold text-foreground">CEO</h3>
                         <p className="text-sm text-primary font-semibold">Patrick Z. Flomo</p>
-                        <p className="text-muted-foreground leading-relaxed">
+                        <p className="text-foreground leading-relaxed">
                           Under visionary leadership, Flomo Merchandise has grown into a trusted name
                           in the food ingredients industry, bringing innovation and quality to every product.
                         </p>
                         <div className="space-y-1 text-sm">
                           
                           <p><strong>Phone: </strong>+231 88 618 4360</p>
-                          <p><strong>Company Address: </strong>New Life Community Bernard Farm Paynesville Montserrado Liberia 100010</p>
+                          <p><strong>Company Address: </strong>New Life Community Bernard Farm Paynesville Montserrado Liberia 100010</p>
                         </div>
                       </div>
                     </div>
@@ -303,13 +304,13 @@ const Home = () => {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="space-y-6"
               >
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-foreground leading-relaxed">
                   Flomo Merchandise specializes in quality food flavours, colours, and bakery 
                   ingredients that redefine taste and creativity. We take pride in providing 
                   superior products that help bakers, chefs, and food manufacturers create 
                   exceptional culinary experiences.
                 </p>
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-lg text-foreground leading-relaxed">
                   Our commitment to excellence ensures that every product meets the highest 
                   standards of quality, helping you transform ordinary recipes into extraordinary 
                   creations that delight every palate.
@@ -334,7 +335,7 @@ const Home = () => {
                 <Sparkles className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">Premium Quality</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 We source and supply only the finest food flavours, colours, and bakery 
                 ingredients that meet international quality standards.
               </p>
@@ -350,7 +351,7 @@ const Home = () => {
                 <Award className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">Trusted Brand</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 Built on a foundation of trust and reliability, we've become a preferred 
                 partner for food businesses across the region.
               </p>
@@ -366,7 +367,7 @@ const Home = () => {
                 <Users className="h-8 w-8 text-primary-foreground" />
               </div>
               <h3 className="text-2xl font-bold mb-4 text-foreground">Customer Focus</h3>
-              <p className="text-muted-foreground leading-relaxed">
+              <p className="text-foreground leading-relaxed">
                 Your success is our priority. We provide personalized support to help 
                 you achieve the perfect results every time.
               </p>
@@ -395,29 +396,20 @@ const Home = () => {
             <h2 className="text-4xl md:text-6xl font-bold text-foreground leading-tight">
               Ready to Transform Your Creations?
             </h2>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+            <p className="text-xl text-foreground max-w-2xl mx-auto leading-relaxed">
               Discover our complete range of food flavours, colours, and bakery ingredients
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Link to="/contact">
+              <Link to="/products">
                 <Button
                   size="lg"
                   className="text-lg px-10 py-7 shadow-medium hover:shadow-strong transition-all duration-300 hover:scale-105 hover:-translate-y-1"
                 >
-                  Get In Touch
-                 
+                  View Products
+                 <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
-              <Link to="/products">
-               <Button
-  size="lg"
-  variant="outline"
-  className="text-lg px-10 py-7 border-2 border-gray-400 text-gray-800 hover:bg-card hover:text-gray-900 transition-all duration-300 hover:scale-105 hover:-translate-y-1"
->
-  View Products
-</Button>
-
-              </Link>
+              
             </div>
           </motion.div>
         </div>

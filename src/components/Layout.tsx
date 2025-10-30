@@ -91,7 +91,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
               <h3 className="font-bold text-lg mb-3 text-primary">Flomo Merchandise</h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
+              <p className="text-foreground text-sm leading-relaxed">
                 Bringing colour, flavour, and delight to every creation since our inception.
               </p>
             </div>
@@ -102,7 +102,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   <li key={link.path}>
                     <Link
                       to={link.path}
-                      className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                      className="text-sm text-foreground hover:text-primary transition-colors"
                     >
                       {link.label}
                     </Link>
@@ -112,13 +112,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </div>
             <div>
               <h4 className="font-semibold mb-3">Contact</h4>
-              <div className="space-y-2 text-sm text-muted-foreground">
+              <div className="space-y-2 text-sm text-foreground">
                 <p></p>
                 <p>patrickzflomo@gmail.com</p>
               </div>
             </div>
           </div>
-          <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
+          <div className="mt-8 pt-6 border-t text-center text-sm text-foreground">
             <p>Managed By Raqnal Consultancy Inc (Liberia)</p>
           </div>
         </div>

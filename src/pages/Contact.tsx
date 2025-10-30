@@ -11,6 +11,8 @@ import { motion } from "framer-motion";
 import flavoursCategory from "@/assets/flavours-category.jpg";
 import coloursCategory from "@/assets/colours-category.jpg";
 import bakeryCategory from "@/assets/bakery-category.jpg";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -27,18 +29,26 @@ const Contact = () => {
   });
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
       const validatedData = contactSchema.parse(formData);
-      
-     toast({
-  title: "Message Sent!",
-  description: "Thank you for contacting us. We'll get back to you soon.",
-  duration: 1500, // 2 seconds
-  className: "bg-green-100 text-green-800 border border-green-300", // light green style
-});
+
+      // Store data in Firebase Firestore
+      await addDoc(collection(db, "Contact"), {
+        name: validatedData.name,
+        email: validatedData.email,
+        message: validatedData.message,
+        timestamp: new Date()
+      });
+
+      toast({
+        title: "Message Sent!",
+        description: "Thank you for contacting us. We'll get back to you soon.",
+        duration: 2500, // 2 seconds
+        className: "bg-green-100 text-foreground border border-green-300", // light green style
+      });
 
       setFormData({ name: "", email: "", message: "" });
       setErrors({});
@@ -51,13 +61,18 @@ const Contact = () => {
           }
         });
         setErrors(newErrors);
-        
+
         toast({
-        
           description: "Hey there! Looks like you missed something.",
           variant: "destructive",
-          duration: 1500, // 2 seconds
-
+          duration: 2500, // 2 seconds
+        });
+      } else {
+        // Handle Firebase error
+        toast({
+          description: "Failed to send message. Please try again.",
+          variant: "destructive",
+          duration: 2500,
         });
       }
     }

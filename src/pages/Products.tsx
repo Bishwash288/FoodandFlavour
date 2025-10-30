@@ -153,7 +153,7 @@ const Products = () => {
 </h1>
 
             <div className="w-40 h-1 bg-gradient-to-r from-primary to-primary-light mx-auto rounded-full" />
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl text-foreground max-w-3xl mx-auto leading-relaxed">
               Explore our comprehensive selection of food flavours, colours, and bakery ingredients 
               designed to elevate your culinary creations
             </p>
@@ -227,7 +227,7 @@ const Products = () => {
                   <h2 className="text-3xl md:text-4xl font-bold mb-3 text-foreground">
                     {category.title}
                   </h2>
-                  <p className="text-lg text-muted-foreground leading-relaxed">
+                  <p className="text-lg text-foreground leading-relaxed">
                     {category.description}
                   </p>
                 </div>
@@ -262,7 +262,7 @@ const Products = () => {
           <h3 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">
             Need More Information?
           </h3>
-          <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
+          <p className="text-lg text-foreground mb-8 max-w-2xl mx-auto">
             Contact us to learn more about our products, pricing, and bulk ordering options
           </p>
           <Link to="/contact">
