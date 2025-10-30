@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Flomo Taste Delight - Food Website
 
 A modern, responsive website for Flomo Merchandise, showcasing their range of food flavors, colors, and bakery ingredients.
@@ -67,3 +68,6 @@ src/
 - Contact form with validation
 - Modern UI with shadcn/ui components
 - SEO optimized
+=======
+# FoodandFlavour
+>>>>>>> 969e3ff7d8d9378d960ea93efb0fe401997208b1
